@@ -34,9 +34,9 @@ public class StudentControlller {
         return ResponseEntity.ok(studentService.saveStudent(studentRequest));
     }
 
-    @PutMapping
-    public ResponseEntity<StudentEntity> updateStudent(@RequestBody @Valid StudentRequest studentRequest) {
-        return ResponseEntity.ok(studentService.updateStudent(studentRequest));
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody @Valid StudentRequest studentRequest) {
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{id}")

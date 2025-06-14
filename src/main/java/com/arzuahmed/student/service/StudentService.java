@@ -28,28 +28,29 @@ public class StudentService {
 
     public StudentEntity saveStudent(StudentRequest studentRequest) {
         StudentEntity newStudent = new StudentEntity();
+        return getStudentEntity(studentRequest, newStudent);
+    }
+
+
+    public StudentEntity updateStudent(Long id, StudentRequest studentRequest) {
+        StudentEntity existedStudent = studentRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Student not found"));
+        return getStudentEntity(studentRequest, existedStudent);
+    }
+
+    private StudentEntity getStudentEntity(StudentRequest studentRequest, StudentEntity existedStudent) {
         if (studentRequest.getAge() != null) {
-            newStudent.setAge(studentRequest.getAge());
+            existedStudent.setAge(studentRequest.getAge());
         }
         if (studentRequest.getName() != null) {
-            newStudent.setName(studentRequest.getName());
+            existedStudent.setName(studentRequest.getName());
         }
         if (studentRequest.getEmail() != null) {
-            newStudent.setEmail(studentRequest.getEmail());
+            existedStudent.setEmail(studentRequest.getEmail());
         }
-        return studentRepository.save(newStudent);
-    }
-
-
-    public StudentEntity updateStudent(StudentRequest studentRequest) {
-        StudentEntity existedStudent = studentRepository.findById(studentRequest.getId())
-                .orElseThrow(()-> new RuntimeException("Student not found"));
-        existedStudent.setName(studentRequest.getName());
-        existedStudent.setAge(studentRequest.getAge());
-        existedStudent.setEmail(studentRequest.getEmail());
         return studentRepository.save(existedStudent);
     }
-    
+
 
     public void deleteById(Long id) {
         studentRepository.deleteById(id);
