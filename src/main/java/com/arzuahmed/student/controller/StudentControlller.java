@@ -36,6 +36,7 @@ public class StudentControlller {
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody @Valid StudentRequest studentRequest) {
+        studentService.updateStudent(id, studentRequest);       
         return ResponseEntity.ok().build();
     }
 
